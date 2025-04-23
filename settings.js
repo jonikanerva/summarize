@@ -18,6 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load settings
   function loadSettings() {
+    // For development environment
+    if (typeof chrome === 'undefined' || typeof chrome.storage === 'undefined') {
+      // Use local storage as a fallback in development
+      apiKeyInput.value = localStorage.getItem('apiKey') || '';
+      modelSelect.value = localStorage.getItem('model') || DEFAULT_SETTINGS.model;
+      promptTemplateTextarea.value = localStorage.getItem('promptTemplate') || DEFAULT_SETTINGS.promptTemplate;
+      return;
+    }
+    
+    // For Chrome Extension environment
     chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
       apiKeyInput.value = result.apiKey || '';
       modelSelect.value = result.model || DEFAULT_SETTINGS.model;
@@ -46,6 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     
+    // For development environment
+    if (typeof chrome === 'undefined' || typeof chrome.storage === 'undefined') {
+      // Use localStorage for development
+      localStorage.setItem('apiKey', settings.apiKey);
+      localStorage.setItem('model', settings.model);
+      localStorage.setItem('promptTemplate', settings.promptTemplate);
+      showStatus('Settings saved successfully!', 'success');
+      return;
+    }
+    
+    // For Chrome Extension environment
     // Save to storage
     chrome.storage.sync.set(settings, () => {
       showStatus('Settings saved successfully!', 'success');
