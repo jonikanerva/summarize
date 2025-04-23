@@ -56,13 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Open settings page
   openSettingsBtn.addEventListener('click', () => {
-    // For development environment (when testing outside of Chrome Extension)
-    if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') {
-      window.open('settings.html', '_blank');
-      return;
-    }
-    
-    // For Chrome Extension environment
     chrome.runtime.openOptionsPage ? 
       chrome.runtime.openOptionsPage() : 
       chrome.tabs.create({ url: 'settings.html' });

@@ -27,7 +27,7 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "node server.js"
+args = "npx http-server -p 5000"
 waitForPort = 5000
 
 [deployment]
