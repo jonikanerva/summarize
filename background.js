@@ -3,7 +3,7 @@
 // Default settings
 const DEFAULT_SETTINGS = {
   apiKey: '',
-  model: 'gpt-4o', // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
+  model: 'gpt-4.1',
   promptTemplate: 'Please provide a concise summary of the following article, highlighting the main points, key arguments, and conclusions in about 3-5 bullet points:\n\n{{ARTICLE_TEXT}}'
 };
 
@@ -16,6 +16,22 @@ chrome.runtime.onInstalled.addListener(() => {
       promptTemplate: result.promptTemplate || DEFAULT_SETTINGS.promptTemplate
     };
     chrome.storage.sync.set(settings);
+  });
+});
+
+// When the extension icon is clicked, automatically summarize the current page
+chrome.action.onClicked.addListener((tab) => {
+  // First check if API key is set
+  chrome.storage.sync.get(['apiKey'], (result) => {
+    if (!result.apiKey) {
+      // If no API key, open settings page
+      chrome.runtime.openOptionsPage ? 
+        chrome.runtime.openOptionsPage() : 
+        chrome.tabs.create({ url: 'settings.html' });
+    } else {
+      // Send message to content script to start summarization
+      chrome.tabs.sendMessage(tab.id, { action: 'summarize' });
+    }
   });
 });
 
