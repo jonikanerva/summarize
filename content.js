@@ -136,8 +136,48 @@ function extractArticleContent() {
       console.warn('Error in direct selector method:', selectorError);
     }
     
-    // APPROACH 2: Skip Readability library as it's causing issues
-    console.log('Skipping Readability method due to known issues');
+    // APPROACH 2: Try Readability library
+    try {
+      console.log('Attempting Readability method');
+      
+      // Create a clone of the document to avoid modifying the original
+      const documentClone = document.cloneNode(true);
+      
+      // Check if Readability is available
+      if (typeof Readability === 'undefined') {
+        console.warn('Readability library not loaded');
+        throw new Error('Readability not available');
+      }
+      
+      // Create a new Readability object and parse
+      const reader = new Readability(documentClone);
+      const article = reader.parse();
+      
+      if (article && article.content && article.content.length > 200) {
+        console.log('Successfully extracted content with Readability');
+        
+        // Get the text content from the parsed article
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = article.content;
+        
+        // Get all text nodes and join them
+        const textContent = [...tempDiv.querySelectorAll('p, h1, h2, h3, h4, h5, h6')]
+          .map(node => node.textContent.trim())
+          .filter(text => text.length > 0)
+          .join('\n\n');
+        
+        if (textContent.length > 300) {
+          return {
+            title: article.title || document.title,
+            content: textContent
+          };
+        }
+      }
+      
+      console.log('Readability method failed or returned insufficient content');
+    } catch (readabilityError) {
+      console.warn('Readability extraction failed:', readabilityError);
+    }
     
     // APPROACH 3: Density-based approach - find block with highest paragraph density
     try {

@@ -34,7 +34,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "js": ["utils/vendor/readability-bundle.js", "content.js"],
       "css": ["styles.css"]
     }
   ],
