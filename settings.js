@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('settings-form');
   const apiKeyInput = document.getElementById('api-key');
-  const modelSelect = document.getElementById('model');
+  const modelInput = document.getElementById('model');
   const promptTemplateTextarea = document.getElementById('prompt-template');
   const toggleApiKeyBtn = document.getElementById('toggle-api-key');
   const restoreDefaultsBtn = document.getElementById('restore-defaults');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Default settings
   const DEFAULT_SETTINGS = {
     apiKey: '',
-    model: 'gpt-4o', // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
+    model: 'gpt-4.1',
     promptTemplate: 'Please provide a concise summary of the following article, highlighting the main points, key arguments, and conclusions in about 3-5 bullet points:\n\n{{ARTICLE_TEXT}}'
   };
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadSettings() {
     chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
       apiKeyInput.value = result.apiKey || '';
-      modelSelect.value = result.model || DEFAULT_SETTINGS.model;
+      modelInput.value = result.model || DEFAULT_SETTINGS.model;
       promptTemplateTextarea.value = result.promptTemplate || DEFAULT_SETTINGS.promptTemplate;
     });
   }
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const settings = {
       apiKey: apiKeyInput.value.trim(),
-      model: modelSelect.value,
+      model: modelInput.value.trim(),
       promptTemplate: promptTemplateTextarea.value
     };
     
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Restore default settings
   function restoreDefaults() {
     apiKeyInput.value = DEFAULT_SETTINGS.apiKey;
-    modelSelect.value = DEFAULT_SETTINGS.model;
+    modelInput.value = DEFAULT_SETTINGS.model;
     promptTemplateTextarea.value = DEFAULT_SETTINGS.promptTemplate;
     
     showStatus('Default settings restored. Click Save to apply.', 'info');

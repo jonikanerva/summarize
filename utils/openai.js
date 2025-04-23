@@ -9,7 +9,7 @@ async function summarizeWithOpenAI(apiKey, model, prompt) {
       throw new Error('API key is required');
     }
 
-    // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+    // Using the user's preferred model (default: gpt-4.1)
     const endpoint = 'https://api.openai.com/v1/chat/completions';
     
     const response = await fetch(endpoint, {
