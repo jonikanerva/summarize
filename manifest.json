@@ -6,7 +6,8 @@
   "permissions": [
     "activeTab",
     "storage",
-    "scripting"
+    "scripting",
+    "tabs"
   ],
   "host_permissions": [
     "https://api.openai.com/*"
@@ -33,7 +34,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["utils/readability.js", "content.js"],
+      "js": ["content.js"],
       "css": ["styles.css"]
     }
   ],

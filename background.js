@@ -65,6 +65,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
     return true; // Required for async sendResponse
   }
+  
+  // Lisää settings-sivun avaus
+  if (request.action === 'openSettings') {
+    // Avaa settings-sivu
+    chrome.runtime.openOptionsPage ? 
+      chrome.runtime.openOptionsPage() : 
+      chrome.tabs.create({ url: 'settings.html' });
+    
+    return false; // Ei tarvitse async-vastausta
+  }
 });
 
 // Function to summarize article using OpenAI API
