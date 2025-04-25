@@ -1,4 +1,4 @@
-importScripts('utils/openai.js');
+import { summarizeWithOpenAI } from './utils/openai.js';
 
 // Background script for managing extension state and API communication
 
