@@ -391,13 +391,8 @@ async function extractAndSummarize() {
           // Display summary
           const summaryContent = document.getElementById('summary-content');
           if (summaryContent) {
-            // Format the summary - convert bullet points to proper HTML
-            let formattedSummary = response.summary
-              .replace(/\n\n/g, '</p><p>')
-              .replace(/\n/g, '<br>')
-              .replace(/\* /g, '• ');
-              
-            summaryContent.innerHTML = `<p>${formattedSummary}</p>`;
+            // Jos OpenAI palauttaa HTML:n, renderöi se wrapper-divin sisään
+            summaryContent.innerHTML = `<div class="openai-summary-html">${response.summary}</div>`;
           }
         } else {
           // Display error

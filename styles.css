@@ -339,3 +339,102 @@ input:focus, select:focus, textarea:focus {
   color: var(--accent-color);
   border-radius: 4px;
 }
+
+/* OpenAI summary HTML styles */
+.openai-summary-html {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-color);
+  font-family: var(--font-family);
+}
+
+.openai-summary-html h1,
+.openai-summary-html h2,
+.openai-summary-html h3,
+.openai-summary-html h4,
+.openai-summary-html h5,
+.openai-summary-html h6 {
+  color: var(--primary-color);
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.openai-summary-html p {
+  margin-bottom: 1em;
+}
+
+.openai-summary-html ul,
+.openai-summary-html ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.openai-summary-html li {
+  margin-bottom: 0.5em;
+}
+
+.openai-summary-html strong,
+.openai-summary-html b {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.openai-summary-html em,
+.openai-summary-html i {
+  color: var(--dark-grey);
+}
+
+.openai-summary-html blockquote {
+  border-left: 3px solid var(--primary-color);
+  background: var(--light-grey);
+  color: var(--dark-grey);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  font-style: italic;
+}
+
+.openai-summary-html code {
+  background: var(--light-grey);
+  color: #c7254e;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+}
+
+.openai-summary-html pre {
+  background: var(--light-grey);
+  color: #222;
+  padding: 8px 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 13px;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  margin-bottom: 1em;
+}
+
+.openai-summary-html a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.openai-summary-html table {
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  width: 100%;
+  font-size: 13px;
+}
+
+.openai-summary-html th,
+.openai-summary-html td {
+  border: 1px solid var(--medium-grey);
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.openai-summary-html th {
+  background: var(--light-grey);
+  font-weight: 600;
+}
