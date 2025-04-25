@@ -1,8 +1,14 @@
 // Content script for article extraction and summary display
 
 /**
+ * Default base font size for summary (in px).
+ * Change this in one place to update everywhere.
+ */
+const DEFAULT_BASE_FONT_SIZE = 17;
+
+/**
  * Get base font size for summary from chrome.storage.sync (async).
- * Returns a Promise<number> (default 18).
+ * Returns a Promise<number> (default DEFAULT_BASE_FONT_SIZE).
  */
 function getBaseFontSize() {
   return new Promise((resolve) => {
@@ -11,11 +17,11 @@ function getBaseFontSize() {
         if (result && typeof result.baseFontSize === 'number') {
           resolve(result.baseFontSize);
         } else {
-          resolve(18);
+          resolve(DEFAULT_BASE_FONT_SIZE);
         }
       });
     } catch (e) {
-      resolve(18);
+      resolve(DEFAULT_BASE_FONT_SIZE);
     }
   });
 }

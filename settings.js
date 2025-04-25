@@ -11,11 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const baseFontSizeInput = document.getElementById('base-font-size');
 
   // Default settings
+  const DEFAULT_BASE_FONT_SIZE = 17;
   const DEFAULT_SETTINGS = {
     apiKey: '',
     model: 'gpt-4.1',
     promptTemplate: 'Please provide a concise summary of the following article, highlighting the main points, key arguments, and conclusions in about 3-5 bullet points:\n\n{{ARTICLE_TEXT}}',
-    baseFontSize: 18
+    baseFontSize: DEFAULT_BASE_FONT_SIZE
   };
 
   // Load settings
