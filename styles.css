@@ -260,17 +260,20 @@ input:focus, select:focus, textarea:focus {
 
 /* Article Summary Styles */
 .article-summary-extension {
-  position: relative;
-  margin: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
   padding: 16px;
   background-color: var(--background-color);
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   box-shadow: 0 2px 8px var(--shadow-color);
   font-family: var(--font-family);
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 9999;
+  max-width: 100vw;
+  width: 100vw;
+  z-index: 2147483647;
+  box-sizing: border-box;
 }
 
 .summary-header {
