@@ -1,3 +1,5 @@
+importScripts('utils/openai.js');
+
 // Background script for managing extension state and API communication
 
 // Default settings
