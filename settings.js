@@ -8,20 +8,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleApiKeyBtn = document.getElementById('toggle-api-key');
   const restoreDefaultsBtn = document.getElementById('restore-defaults');
   const statusMessage = document.getElementById('status-message');
+  const baseFontSizeInput = document.getElementById('base-font-size');
 
   // Default settings
   const DEFAULT_SETTINGS = {
     apiKey: '',
     model: 'gpt-4.1',
-    promptTemplate: 'Please provide a concise summary of the following article, highlighting the main points, key arguments, and conclusions in about 3-5 bullet points:\n\n{{ARTICLE_TEXT}}'
+    promptTemplate: 'Please provide a concise summary of the following article, highlighting the main points, key arguments, and conclusions in about 3-5 bullet points:\n\n{{ARTICLE_TEXT}}',
+    baseFontSize: 18
   };
 
   // Load settings
   function loadSettings() {
-    chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
+    chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate', 'baseFontSize'], (result) => {
       apiKeyInput.value = result.apiKey || '';
       modelInput.value = result.model || DEFAULT_SETTINGS.model;
       promptTemplateTextarea.value = result.promptTemplate || DEFAULT_SETTINGS.promptTemplate;
+      baseFontSizeInput.value = result.baseFontSize || DEFAULT_SETTINGS.baseFontSize;
     });
   }
 
@@ -32,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const settings = {
       apiKey: apiKeyInput.value.trim(),
       model: modelInput.value.trim(),
-      promptTemplate: promptTemplateTextarea.value
+      promptTemplate: promptTemplateTextarea.value,
+      baseFontSize: parseInt(baseFontSizeInput.value, 10) || DEFAULT_SETTINGS.baseFontSize
     };
     
     // Validate settings
@@ -43,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!settings.promptTemplate.includes('{{ARTICLE_TEXT}}')) {
       showStatus('Prompt template must include {{ARTICLE_TEXT}} placeholder.', 'error');
+      return;
+    }
+    if (isNaN(settings.baseFontSize) || settings.baseFontSize < 10 || settings.baseFontSize > 48) {
+      showStatus('Base font size must be between 10 and 48.', 'error');
       return;
     }
     
@@ -63,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     apiKeyInput.value = DEFAULT_SETTINGS.apiKey;
     modelInput.value = DEFAULT_SETTINGS.model;
     promptTemplateTextarea.value = DEFAULT_SETTINGS.promptTemplate;
-    
+    baseFontSizeInput.value = DEFAULT_SETTINGS.baseFontSize;
     showStatus('Default settings restored. Click Save to apply.', 'info');
   }
 

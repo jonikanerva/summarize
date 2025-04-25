@@ -1,11 +1,34 @@
 // Content script for article extraction and summary display
 
+/**
+ * Get base font size for summary from chrome.storage.sync (async).
+ * Returns a Promise<number> (default 18).
+ */
+function getBaseFontSize() {
+  return new Promise((resolve) => {
+    try {
+      chrome.storage && chrome.storage.sync.get(['baseFontSize'], (result) => {
+        if (result && typeof result.baseFontSize === 'number') {
+          resolve(result.baseFontSize);
+        } else {
+          resolve(18);
+        }
+      });
+    } catch (e) {
+      resolve(18);
+    }
+  });
+}
+
 // Function to insert summary container at the top of the page
-function insertSummaryContainer() {
+async function insertSummaryContainer() {
   // Check if the container already exists
   if (document.getElementById('article-summary-container')) {
     return document.getElementById('article-summary-container');
   }
+
+  // Get base font size from storage
+  const baseFontSize = await getBaseFontSize();
 
   // Create container
   const container = document.createElement('div');
@@ -55,6 +78,9 @@ function insertSummaryContainer() {
   }
   // Poista mahdollinen marginTop-muutos, jotta sivu scrollaa normaalisti
   document.body.style.marginTop = '';
+
+  // Set base font size as CSS variable for summary
+  container.style.setProperty('--summary-base-font-size', baseFontSize + 'px');
 
   // Add event listeners
   document.getElementById('close-summary').addEventListener('click', () => {
@@ -361,12 +387,26 @@ function showLoading() {
   }
 }
 
+/**
+ * Set base font size for summary container if present.
+ * Used to update font size if settings change while summary is open.
+ */
+function updateSummaryFontSize() {
+  getBaseFontSize().then((baseFontSize) => {
+    const container = document.getElementById('article-summary-container');
+    if (container) {
+      container.style.setProperty('--summary-base-font-size', baseFontSize + 'px');
+    }
+  });
+}
+
 // Function to extract article and send it to OpenAI for summarization
 async function extractAndSummarize() {
   try {
     // Insert or get container
-    const container = insertSummaryContainer();
-    
+    const container = await insertSummaryContainer();
+    updateSummaryFontSize();
+
     // Show loading
     showLoading();
     
@@ -409,5 +449,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'summarize') {
     extractAndSummarize();
     sendResponse({ status: 'started' });
+  }
+  if (request.action === 'updateSettings') {
+    // If settings updated, update font size if summary is open
+    updateSummaryFontSize();
   }
 });
