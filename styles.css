@@ -360,21 +360,32 @@ input:focus, select:focus, textarea:focus {
   width: 100%;
 }
 
-.openai-summary-html h1,
+.openai-summary-html h1 {
+  color: var(--primary-color);
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  font-size: 1.5em;
+}
+
 .openai-summary-html h2 {
   color: var(--primary-color);
   margin-top: 1.2em;
   margin-bottom: 0.5em;
   font-weight: 600;
+  font-size: 1.2em;
 }
 
 .openai-summary-html ul {
   margin-left: 1.5em;
   margin-bottom: 1em;
+  list-style-type: disc;
+  padding-left: 1.5em;
 }
 
 .openai-summary-html li {
   margin-bottom: 0.5em;
+  list-style-type: disc;
 }
 
 .openai-summary-html p {
