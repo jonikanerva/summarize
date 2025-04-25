@@ -13,7 +13,8 @@
     "https://api.openai.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "action": {
     "default_icon": {
@@ -43,5 +44,9 @@
       "resources": ["icons/*"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
 }
