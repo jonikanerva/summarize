@@ -22,6 +22,7 @@ async function summarizeWithOpenAI(apiKey, model, prompt) {
         model: model,
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
+        max_tokens: 4096,
       }),
     });
 
