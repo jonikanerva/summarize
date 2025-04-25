@@ -1,17 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Article Summarizer with OpenAI",
+  "name": "Summarize Article with OpenAI",
   "version": "1.0.0",
   "description": "Summarizes web articles using OpenAI's API and Mozilla's Readability parser",
-  "permissions": [
-    "activeTab",
-    "storage",
-    "scripting",
-    "tabs"
-  ],
-  "host_permissions": [
-    "https://api.openai.com/*"
-  ],
+  "permissions": ["activeTab", "storage", "scripting", "tabs"],
+  "host_permissions": ["https://api.openai.com/*"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
@@ -44,9 +37,5 @@
       "resources": ["icons/*"],
       "matches": ["<all_urls>"]
     }
-  ],
-  "background": {
-    "service_worker": "background.js",
-    "type": "module"
-  }
+  ]
 }
