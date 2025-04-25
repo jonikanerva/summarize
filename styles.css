@@ -261,14 +261,14 @@ input:focus, select:focus, textarea:focus {
 /* Article Summary Styles */
 .article-summary-extension {
   position: static;
-  margin: 24px auto 0 auto;
-  padding: 16px;
+  margin: 24px 0 0 0;
+  padding: 16px 0;
   background-color: var(--background-color);
   border-radius: 0 0 8px 8px;
   box-shadow: 0 2px 8px var(--shadow-color);
   font-family: var(--font-family);
-  max-width: 600px;
   width: 100%;
+  max-width: none;
   z-index: 2147483647;
   box-sizing: border-box;
 }
@@ -346,6 +346,9 @@ input:focus, select:focus, textarea:focus {
   line-height: 1.7;
   color: var(--text-color);
   font-family: var(--font-family);
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .openai-summary-html h1,
