@@ -52,7 +52,7 @@ function insertSummaryContainer() {
     </div>
   `;
 
-  // Insert at the very top of the <body> or <html>
+  // Insert at the very top of the <body> so that it scrolls with the page
   if (document.body && document.body.firstChild) {
     document.body.insertBefore(container, document.body.firstChild);
   } else if (document.body) {
@@ -60,19 +60,8 @@ function insertSummaryContainer() {
   } else if (document.documentElement) {
     document.documentElement.insertBefore(container, document.documentElement.firstChild);
   }
-
-  // Push page content down by adding top margin to <body>
-  const summaryHeight = 96; // fallback height, will be updated after render
-  document.body.style.marginTop = `${summaryHeight}px`;
-
-  // After rendering, update margin to actual height
-  setTimeout(() => {
-    const realContainer = document.getElementById('article-summary-container');
-    if (realContainer) {
-      const h = realContainer.offsetHeight;
-      document.body.style.marginTop = `${h + 16}px`;
-    }
-  }, 100);
+  // Poista mahdollinen marginTop-muutos, jotta sivu scrollaa normaalisti
+  document.body.style.marginTop = '';
 
   // Add event listeners
   document.getElementById('close-summary').addEventListener('click', () => {

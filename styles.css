@@ -260,10 +260,7 @@ input:focus, select:focus, textarea:focus {
 
 /* Article Summary Styles */
 .article-summary-extension {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: static;
   margin: 0;
   padding: 16px;
   background-color: var(--background-color);
