@@ -77,7 +77,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-// Function to summarize article using OpenAI API
+// Function to summarize article using OpenAI API (delegates to utils/openai.js)
 async function summarizeArticle(articleContent) {
   try {
     // Get settings from storage
@@ -92,30 +92,12 @@ async function summarizeArticle(articleContent) {
     // Create prompt from template
     const prompt = settings.promptTemplate.replace('{{ARTICLE_TEXT}}', articleContent);
 
-    // Call OpenAI API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${settings.apiKey}`
-      },
-      body: JSON.stringify({
-        model: settings.model,
-        messages: [
-          { role: 'user', content: prompt }
-        ],
-        temperature: 0.7,
-        max_tokens: 4096
-      })
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`OpenAI API Error: ${error.error?.message || 'Unknown error'}`);
+    // Use the util function (assume it's loaded in the background context)
+    if (typeof summarizeWithOpenAI !== "function") {
+      throw new Error("summarizeWithOpenAI is not available in background script. Please ensure utils/openai.js is loaded.");
     }
 
-    const data = await response.json();
-    return data.choices[0].message.content.trim();
+    return await summarizeWithOpenAI(settings.apiKey, settings.model, prompt);
   } catch (error) {
     console.error('Error in summarizeArticle:', error);
     throw error;

@@ -85,3 +85,12 @@ if (typeof module !== "undefined" && module.exports) {
     validateApiKey,
   };
 }
+
+// Make available globally for background.js if running in browser context
+if (typeof window !== "undefined") {
+  window.summarizeWithOpenAI = summarizeWithOpenAI;
+  window.validateApiKey = validateApiKey;
+} else if (typeof self !== "undefined") {
+  self.summarizeWithOpenAI = summarizeWithOpenAI;
+  self.validateApiKey = validateApiKey;
+}
