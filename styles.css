@@ -279,6 +279,7 @@ input:focus, select:focus, textarea:focus {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  padding: 0 16px;
 }
 
 .summary-title {
@@ -301,6 +302,7 @@ input:focus, select:focus, textarea:focus {
 .summary-content {
   font-size: 14px;
   line-height: 1.6;
+  padding: 0 16px;
 }
 
 .summary-content p {
