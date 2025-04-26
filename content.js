@@ -413,7 +413,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "extractContent") {
     try {
       const article = extractArticleContent();
-      sendResponse({ success: true, title: article.title, content: article.content });
+      sendResponse({
+        success: true,
+        title: article.title,
+        content: article.content,
+      });
     } catch (e) {
       sendResponse({ success: false, error: e.message });
     }
