@@ -302,25 +302,9 @@ function showError(message) {
   }
 }
 
-// Function to show loading state
-function showLoading() {
-  const summaryContent = document.getElementById("summary-content");
-  if (summaryContent) {
-    summaryContent.innerHTML = `
-      <div class="loading-indicator">
-        <div class="spinner"></div>
-        <p>Generating summary...</p>
-      </div>
-    `;
-  }
-}
-
 // Function to extract article and send it to OpenAI for summarization
 async function extractAndSummarize() {
   try {
-    // Show loading
-    showLoading();
-
     // Extract article content
     const article = extractArticleContent();
 

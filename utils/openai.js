@@ -42,41 +42,5 @@ async function summarizeWithOpenAI(apiKey, model, prompt) {
   }
 }
 
-// Function to validate an OpenAI API key
-async function validateApiKey(apiKey) {
-  try {
-    if (!apiKey) {
-      return { valid: false, error: "API key is empty" };
-    }
-
-    // Make a minimal request to verify the API key
-    const response = await fetch("https://api.openai.com/v1/models", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-
-    if (response.status === 401) {
-      return { valid: false, error: "Invalid API key" };
-    }
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      return {
-        valid: false,
-        error:
-          errorData.error?.message ||
-          `API request failed with status ${response.status}`,
-      };
-    }
-
-    return { valid: true };
-  } catch (error) {
-    console.error("Error validating API key:", error);
-    return { valid: false, error: "Network error when validating API key" };
-  }
-}
-
 // ES module exports
-export { summarizeWithOpenAI, validateApiKey };
+export { summarizeWithOpenAI };
