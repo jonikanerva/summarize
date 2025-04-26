@@ -285,60 +285,6 @@ function extractArticleContent() {
   }
 }
 
-// Function to show error in the summary container
-function showError(message) {
-  const summaryContent = document.getElementById("summary-content");
-  if (summaryContent) {
-    summaryContent.innerHTML = `
-      <div class="error-message">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M12 8V12" stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M12 16H12.01" stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <p>${message}</p>
-      </div>
-    `;
-  }
-}
-
-// Function to extract article and send it to OpenAI for summarization
-async function extractAndSummarize() {
-  try {
-    // Extract article content
-    const article = extractArticleContent();
-
-    if (!article.content || article.content.trim().length === 0) {
-      showError("No article content found on this page.");
-      return;
-    }
-
-    // Send message to background script to summarize
-    chrome.runtime.sendMessage(
-      {
-        action: "summarizeArticle",
-        articleContent: article.content,
-      },
-      (response) => {
-        if (response.success) {
-          // Display summary
-          const summaryContent = document.getElementById("summary-content");
-          if (summaryContent) {
-            // Jos OpenAI palauttaa HTML:n, renderöi se wrapper-divin sisään
-            summaryContent.innerHTML = `<div class="openai-summary-html">${response.summary}</div>`;
-          }
-        } else {
-          // Display error
-          showError(response.error || "An unknown error occurred.");
-        }
-      }
-    );
-  } catch (error) {
-    console.error("Error in extractAndSummarize:", error);
-    showError(error.message || "An unknown error occurred.");
-  }
-}
-
 // Add message listener for commands from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "extractContent") {
@@ -353,9 +299,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse({ success: false, error: e.message });
     }
     return true;
-  }
-  if (request.action === "summarize") {
-    extractAndSummarize();
-    sendResponse({ status: "started" });
   }
 });
