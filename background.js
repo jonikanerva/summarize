@@ -32,8 +32,12 @@ chrome.action.onClicked.addListener((tab) => {
         ? chrome.runtime.openOptionsPage()
         : chrome.tabs.create({ url: "settings.html" });
     } else {
-      // Send message to content script to start summarization
-      chrome.tabs.sendMessage(tab.id, { action: "summarize" });
+      chrome.windows.create({
+        url: chrome.runtime.getURL(`summary.html?tabId=${tab.id}`),
+        type: "popup",
+        width: 600,
+        height: 800
+      });
     }
   });
 });

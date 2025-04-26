@@ -34,7 +34,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["icons/*", "summary.html"],
+      "resources": ["icons/*", "summary.html", "summary.js"],
       "matches": ["<all_urls>"]
     }
   ]

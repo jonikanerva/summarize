@@ -410,6 +410,15 @@ async function extractAndSummarize() {
 
 // Add message listener for commands from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "extractContent") {
+    try {
+      const article = extractArticleContent();
+      sendResponse({ success: true, title: article.title, content: article.content });
+    } catch (e) {
+      sendResponse({ success: false, error: e.message });
+    }
+    return true;
+  }
   if (request.action === "summarize") {
     extractAndSummarize();
     sendResponse({ status: "started" });
