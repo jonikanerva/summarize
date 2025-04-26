@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 // Function to summarize article using OpenAI API (delegates to utils/openai.js)
-async function summarizeArticle(articleContent) {
+async function summarizeArticle(articleData) {
   try {
     // Get settings from storage
     const settings = await new Promise((resolve) => {
@@ -99,11 +99,14 @@ async function summarizeArticle(articleContent) {
       );
     }
 
+    const article = `${articleData.title}
+    ${articleData.byline}
+    ${articleData.publishedTime}
+    
+    ${articleData.content}`;
+
     // Create prompt from template
-    const prompt = settings.promptTemplate.replace(
-      "{{ARTICLE_TEXT}}",
-      articleContent
-    );
+    const prompt = settings.promptTemplate.replace("{{ARTICLE_TEXT}}", article);
 
     // Use the util function (assume it's loaded in the background context)
     if (typeof summarizeWithOpenAI !== "function") {

@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       chrome.runtime.sendMessage(
-        { action: "summarizeArticle", articleContent: resp.content },
+        { action: "summarizeArticle", articleContent: resp },
         (res) => {
           if (res.success) {
             out.innerHTML = res.summary;
