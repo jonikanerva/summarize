@@ -5,9 +5,42 @@ function extractArticleContent() {
   try {
     console.log("Starting article extraction");
 
-    // APPROACH 1: Try the direct selector method first (fastest and most reliable for many sites)
+    // APPROACH 1: Try Readability library
     try {
-      console.log("Attempting direct selector method first");
+      console.log("Attempting Readability method");
+
+      // Create a clone of the document to avoid modifying the original
+      const documentClone = document.cloneNode(true);
+
+      // Check if Readability is available
+      if (typeof Readability === "undefined") {
+        console.warn("Readability library not loaded");
+        throw new Error("Readability not available");
+      }
+
+      // Create a new Readability object and parse
+      const reader = new Readability(documentClone);
+      const article = reader.parse();
+
+      if (article && article.content && article.length > 200) {
+        console.log("Successfully extracted content with Readability");
+
+        return {
+          title: article.title,
+          content: article.textContent,
+          byline: article.byline,
+          publishedTime: article.publishedTime,
+        };
+      }
+
+      console.log("Readability method failed or returned insufficient content");
+    } catch (readabilityError) {
+      console.warn("Readability extraction failed:", readabilityError);
+    }
+
+    // APPROACH 2: Try the direct selector method  (fastest and most reliable for many sites)
+    try {
+      console.log("Attempting direct selector method");
 
       // Common article content selectors
       const selectors = [
@@ -66,51 +99,6 @@ function extractArticleContent() {
       );
     } catch (selectorError) {
       console.warn("Error in direct selector method:", selectorError);
-    }
-
-    // APPROACH 2: Try Readability library
-    try {
-      console.log("Attempting Readability method");
-
-      // Create a clone of the document to avoid modifying the original
-      const documentClone = document.cloneNode(true);
-
-      // Check if Readability is available
-      if (typeof Readability === "undefined") {
-        console.warn("Readability library not loaded");
-        throw new Error("Readability not available");
-      }
-
-      // Create a new Readability object and parse
-      const reader = new Readability(documentClone);
-      const article = reader.parse();
-
-      if (article && article.content && article.content.length > 200) {
-        console.log("Successfully extracted content with Readability");
-
-        // Get the text content from the parsed article
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = article.content;
-
-        // Get all text nodes and join them
-        const textContent = [
-          ...tempDiv.querySelectorAll("p, h1, h2, h3, h4, h5, h6"),
-        ]
-          .map((node) => node.textContent.trim())
-          .filter((text) => text.length > 0)
-          .join("\n\n");
-
-        if (textContent.length > 300) {
-          return {
-            title: article.title || document.title,
-            content: textContent,
-          };
-        }
-      }
-
-      console.log("Readability method failed or returned insufficient content");
-    } catch (readabilityError) {
-      console.warn("Readability extraction failed:", readabilityError);
     }
 
     // APPROACH 3: Density-based approach - find block with highest paragraph density
@@ -294,6 +282,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         success: true,
         title: article.title,
         content: article.content,
+        byline: article.byline,
+        publishedTime: article.publishedTime,
       });
     } catch (e) {
       sendResponse({ success: false, error: e.message });
