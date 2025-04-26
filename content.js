@@ -1,3 +1,5 @@
+import { Readability } from "@mozilla/readability";
+
 // Content script for article extraction and summary display
 
 // Function to extract article content using Readability or fallback methods
@@ -8,11 +10,6 @@ function extractArticleContent() {
     // Create a clone of the document to avoid modifying the original
     const documentClone = document.cloneNode(true);
 
-    // Check if Readability is available
-    if (typeof Readability === "undefined") {
-      console.warn("Readability library not loaded");
-      throw new Error("Readability not available");
-    }
 
     // Create a new Readability object and parse
     const reader = new Readability(documentClone);
