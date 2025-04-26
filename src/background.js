@@ -49,10 +49,10 @@ chrome.action.onClicked.addListener((tab) => {
       // If no API key, open settings page
       chrome.runtime.openOptionsPage
         ? chrome.runtime.openOptionsPage()
-        : chrome.tabs.create({ url: "settings.html" });
+        : chrome.tabs.create({ url: "../html/settings.html" });
     } else {
       chrome.tabs.create({
-        url: chrome.runtime.getURL(`summary.html?tabId=${tab.id}`),
+        url: chrome.runtime.getURL(`../html/summary.html?tabId=${tab.id}`),
       });
     }
   });
@@ -98,7 +98,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Avaa settings-sivu
     chrome.runtime.openOptionsPage
       ? chrome.runtime.openOptionsPage()
-      : chrome.tabs.create({ url: "settings.html" });
+      : chrome.tabs.create({ url: "../html/settings.html" });
 
     return false; // Ei tarvitse async-vastausta
   }

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (chrome.runtime.openOptionsPage) {
       chrome.runtime.openOptionsPage();
     } else {
-      chrome.tabs.create({ url: "settings.html" });
+      chrome.tabs.create({ url: "../html/settings.html" });
     }
   });
   const params = new URLSearchParams(location.search);
