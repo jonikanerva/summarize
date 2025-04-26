@@ -1,67 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Article Summarizer Settings</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body class="settings-body">
-  <header class="settings-header">
-    <div class="logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M7 7H17" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M7 12H17" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M7 17H13" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h1>Article Summarizer Settings</h1>
-    </div>
-  </header>
-  
-  <main class="settings-content">
-    <form id="settings-form">
-      <div class="form-group">
-        <label for="api-key">OpenAI API Key</label>
-        <div class="input-with-info">
-          <input type="password" id="api-key" name="apiKey" placeholder="Enter your OpenAI API key" autocomplete="off">
-          <button type="button" id="toggle-api-key" class="toggle-visibility" title="Toggle Visibility">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="eye-icon">
-              <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article Summarizer Settings</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="settings-body">
+    <header class="settings-header">
+      <div class="logo">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+            stroke="#1A73E8"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M7 7H17"
+            stroke="#1A73E8"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M7 12H17"
+            stroke="#1A73E8"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M7 17H13"
+            stroke="#1A73E8"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <h1>Article Summarizer Settings</h1>
+      </div>
+    </header>
+
+    <main class="settings-content">
+      <form id="settings-form">
+        <div class="form-group">
+          <label for="api-key">OpenAI API Key</label>
+          <div class="input-with-info">
+            <input
+              type="password"
+              id="api-key"
+              name="apiKey"
+              placeholder="Enter your OpenAI API key"
+              autocomplete="off"
+            />
+            <button
+              type="button"
+              id="toggle-api-key"
+              class="toggle-visibility"
+              title="Toggle Visibility"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="eye-icon"
+              >
+                <path
+                  d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <p class="input-help">
+            Your API key is stored locally and only used to make requests to
+            OpenAI.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="model">OpenAI Model</label>
+          <input
+            type="text"
+            id="model"
+            name="model"
+            placeholder="Enter OpenAI model name (e.g., gpt-4.1)"
+          />
+          <p class="input-help">
+            Enter the name of the OpenAI model to use for summarization.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="prompt-template">Prompt Template</label>
+          <textarea
+            id="prompt-template"
+            name="promptTemplate"
+            rows="20"
+            placeholder="Enter your prompt template. Use {{ARTICLE_TEXT}} where the article content should be inserted."
+          ></textarea>
+          <p class="input-help">
+            Customize the prompt sent to OpenAI. Use {{ARTICLE_TEXT}} as a
+            placeholder for the article content.
+          </p>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="restore-defaults" class="secondary-button">
+            Restore Defaults
+          </button>
+          <button type="submit" id="save-settings" class="primary-button">
+            Save Settings
           </button>
         </div>
-        <p class="input-help">Your API key is stored locally and only used to make requests to OpenAI.</p>
-      </div>
-      
-      <div class="form-group">
-        <label for="model">OpenAI Model</label>
-        <input type="text" id="model" name="model" placeholder="Enter OpenAI model name (e.g., gpt-4.1)">
-        <p class="input-help">Enter the name of the OpenAI model to use for summarization.</p>
-      </div>
+      </form>
 
-      <div class="form-group">
-        <label for="base-font-size">Base Font Size</label>
-        <input type="number" id="base-font-size" name="baseFontSize" min="10" max="48" step="1" placeholder="17">
-        <p class="input-help">Set the base font size (in px) for summary text. Default: 17px.</p>
-      </div>
-      
-      <div class="form-group">
-        <label for="prompt-template">Prompt Template</label>
-        <textarea id="prompt-template" name="promptTemplate" rows="20" placeholder="Enter your prompt template. Use {{ARTICLE_TEXT}} where the article content should be inserted."></textarea>
-        <p class="input-help">Customize the prompt sent to OpenAI. Use {{ARTICLE_TEXT}} as a placeholder for the article content.</p>
-      </div>
-      
-      <div class="form-actions">
-        <button type="button" id="restore-defaults" class="secondary-button">Restore Defaults</button>
-        <button type="submit" id="save-settings" class="primary-button">Save Settings</button>
-      </div>
-    </form>
-    
-    <div id="status-message" class="status-message"></div>
-  </main>
-  
-  <script src="settings.js"></script>
-</body>
+      <div id="status-message" class="status-message"></div>
+    </main>
+
+    <script src="settings.js"></script>
+  </body>
 </html>
