@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const out = document.querySelector(".openai-summary-html");
   const settingsBtn = document.getElementById("open-settings");
+  const reloadBtn = document.getElementById("reload-summary");
+  reloadBtn.addEventListener("click", generateSummary);
   settingsBtn.addEventListener("click", () => {
     if (chrome.runtime.openOptionsPage) {
       chrome.runtime.openOptionsPage();
@@ -8,13 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
       chrome.tabs.create({ url: "settings.html" });
     }
   });
-  out.innerHTML = `
-      <div class="loading-indicator">
-        <div class="spinner"></div>
-        <p>Generating summary...</p>
-      </div>
-    `;
-
   const params = new URLSearchParams(location.search);
   const tabId = Number(params.get("tabId"));
   if (!tabId) {
@@ -22,20 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  chrome.tabs.sendMessage(tabId, { action: "extractContent" }, (resp) => {
-    if (!resp || !resp.success) {
-      out.innerHTML = `<p>Error extracting: ${resp?.error}</p>`;
-      return;
-    }
-    chrome.runtime.sendMessage(
-      { action: "summarizeArticle", articleContent: resp.content },
-      (res) => {
-        if (res.success) {
-          out.innerHTML = res.summary;
-        } else {
-          out.innerHTML = `<p>Summarointi epäonnistui: ${res.error}</p>`;
-        }
+  function generateSummary() {
+    out.innerHTML = `
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p>Generating summary...</p>
+      </div>
+    `;
+    chrome.tabs.sendMessage(tabId, { action: "extractContent" }, (resp) => {
+      if (!resp || !resp.success) {
+        out.innerHTML = `<p>Error extracting: ${resp?.error}</p>`;
+        return;
       }
-    );
-  });
+      chrome.runtime.sendMessage(
+        { action: "summarizeArticle", articleContent: resp.content },
+        (res) => {
+          if (res.success) {
+            out.innerHTML = res.summary;
+          } else {
+            out.innerHTML = `<p>Summarointi epäonnistui: ${res.error}</p>`;
+          }
+        }
+      );
+    });
+  }
+
+  // initial summary generation
+  generateSummary();
 });
