@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const out = document.querySelector(".openai-summary-html");
-  out.innerHTML = "<p>Loading…</p>";
+  out.innerHTML = `
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p>Generating summary...</p>
+      </div>
+    `;
 
   const params = new URLSearchParams(location.search);
   const tabId = Number(params.get("tabId"));

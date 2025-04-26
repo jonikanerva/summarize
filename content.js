@@ -1,55 +1,5 @@
 // Content script for article extraction and summary display
 
-/**
- * Lisää summary.html tiedoston sisältö DOM:iin ja palauttaa containerin.
- */
-async function insertSummaryContainer() {
-  // Jos kontti on jo olemassa, palauta se
-  if (document.getElementById("article-summary-container")) {
-    return document.getElementById("article-summary-container");
-  }
-
-  // Lue summary.html tiedosto (olettaen että se on extensionin rootissa)
-  const url = chrome.runtime.getURL("summary.html");
-  const resp = await fetch(url);
-  const html = await resp.text();
-
-  // Luo container
-  const container = document.createElement("div");
-  container.id = "article-summary-container";
-  container.className = "article-summary-extension";
-  container.innerHTML = html;
-
-  // Lisää DOM:iin
-  if (document.body && document.body.firstChild) {
-    document.body.insertBefore(container, document.body.firstChild);
-  } else if (document.body) {
-    document.body.appendChild(container);
-  } else if (document.documentElement) {
-    document.documentElement.insertBefore(
-      container,
-      document.documentElement.firstChild
-    );
-  }
-  document.body.style.marginTop = "";
-
-  // Lisää event-listenerit vasta kun HTML on ladattu
-  const closeBtn = container.querySelector("#close-summary");
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      container.remove();
-    });
-  }
-  const settingsBtn = container.querySelector("#open-settings");
-  if (settingsBtn) {
-    settingsBtn.addEventListener("click", () => {
-      chrome.runtime.sendMessage({ action: "openSettings" });
-    });
-  }
-
-  return container;
-}
-
 // Function to extract article content using Readability or fallback methods
 function extractArticleContent() {
   try {
@@ -368,9 +318,6 @@ function showLoading() {
 // Function to extract article and send it to OpenAI for summarization
 async function extractAndSummarize() {
   try {
-    // Insert or get container
-    const container = await insertSummaryContainer();
-
     // Show loading
     showLoading();
 

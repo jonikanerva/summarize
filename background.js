@@ -32,11 +32,8 @@ chrome.action.onClicked.addListener((tab) => {
         ? chrome.runtime.openOptionsPage()
         : chrome.tabs.create({ url: "settings.html" });
     } else {
-      chrome.windows.create({
+      chrome.tabs.create({
         url: chrome.runtime.getURL(`summary.html?tabId=${tab.id}`),
-        type: "popup",
-        width: 600,
-        height: 800
       });
     }
   });
