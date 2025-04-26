@@ -6,9 +6,25 @@
   "permissions": ["activeTab", "storage", "scripting", "tabs"],
   "host_permissions": ["https://api.openai.com/*"],
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "src/background.js",
     "type": "module"
   },
+  "options_ui": {
+    "page": "html/settings.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "html/*", "src/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "action": {
     "default_icon": {
       "16": "icons/icon16.svg",
@@ -16,26 +32,9 @@
       "128": "icons/icon128.svg"
     }
   },
-  "options_ui": {
-    "page": "settings.html",
-    "open_in_tab": true
-  },
   "icons": {
     "16": "icons/icon16.svg",
     "48": "icons/icon48.svg",
     "128": "icons/icon128.svg"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["utils/readability-bundle.js", "content.js"],
-      "css": ["styles.css"]
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["icons/*", "summary.html", "summary.js"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  }
 }

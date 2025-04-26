@@ -3,3 +3,5 @@
 .config
 .vscode
 node_modules
+.parcel-cache
+release
