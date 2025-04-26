@@ -1,5 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   const out = document.querySelector(".openai-summary-html");
+  const settingsBtn = document.getElementById("open-settings");
+  settingsBtn.addEventListener("click", () => {
+    if (chrome.runtime.openOptionsPage) {
+      chrome.runtime.openOptionsPage();
+    } else {
+      chrome.tabs.create({ url: "settings.html" });
+    }
+  });
   out.innerHTML = `
       <div class="loading-indicator">
         <div class="spinner"></div>
