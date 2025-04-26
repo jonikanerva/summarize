@@ -10,15 +10,9 @@ async function insertSummaryContainer() {
   }
 
   // Lue summary.html tiedosto (olettaen että se on extensionin rootissa)
-  let html;
-  try {
-    const url = chrome.runtime.getURL("summary.html");
-    const resp = await fetch(url);
-    html = await resp.text();
-  } catch (e) {
-    console.error("summary.html lataus epäonnistui:", e);
-    html = `<div class="error-message">Virhe: summary.html ei löytynyt.</div>`;
-  }
+  const url = chrome.runtime.getURL("summary.html");
+  const resp = await fetch(url);
+  const html = await resp.text();
 
   // Luo container
   const container = document.createElement("div");
