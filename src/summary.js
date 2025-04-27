@@ -29,6 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
         out.innerHTML = `<p>Error extracting: ${resp?.error}</p>`;
         return;
       }
+
+      if (resp.title) {
+        document.title = `Summary: ${resp.title}`;
+      }
+
       chrome.runtime.sendMessage(
         { action: "summarizeArticle", articleContent: resp },
         (res) => {
