@@ -2,10 +2,11 @@
   "name": "summarize",
   "version": "1.0.0",
   "scripts": {
+    "lint": "prettier --check .",
     "clean": "rm -rf release",
     "parcel": "parcel build --dist-dir=release manifest.json",
     "zip": "cd release && zip -r summarize.zip . && cd ..",
-    "build": "yarn clean && yarn parcel && yarn zip"
+    "build": "yarn lint && yarn clean && yarn parcel && yarn zip"
   },
   "author": "Joni Kanerva",
   "license": "MIT",
@@ -18,7 +19,12 @@
     "@parcel/config-webextension": "^2.14.4",
     "buffer": "^6.0.3",
     "parcel": "^2.14.4",
+    "prettier": "^3.5.3",
     "process": "^0.11.10",
     "svgo": "^3.3.2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
