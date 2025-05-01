@@ -1,15 +1,17 @@
 /* Global Styles */
 :root {
-  --primary-color: #1A73E8; /* Chrome blue */
-  --secondary-color: #34A853; /* Success green */
-  --background-color: #FFFFFF; /* White */
+  --primary-color: #1a73e8; /* Chrome blue */
+  --secondary-color: #34a853; /* Success green */
+  --background-color: #ffffff; /* White */
   --text-color: #202124; /* Dark grey */
-  --accent-color: #EA4335; /* Attention red */
-  --light-grey: #F1F3F4;
-  --medium-grey: #DADCE0;
-  --dark-grey: #5F6368;
-  --shadow-color: rgba(0,0,0,0.1);
-  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --accent-color: #ea4335; /* Attention red */
+  --light-grey: #f1f3f4;
+  --medium-grey: #dadce0;
+  --dark-grey: #5f6368;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --summary-base-font-size: 17px;
 }
 
@@ -50,11 +52,11 @@ button {
 }
 
 .primary-button:hover {
-  background-color: #0D62D9;
+  background-color: #0d62d9;
 }
 
 .primary-button:active {
-  background-color: #0A57C5;
+  background-color: #0a57c5;
 }
 
 .primary-button:disabled {
@@ -115,7 +117,9 @@ label {
   font-weight: 500;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--medium-grey);
@@ -124,7 +128,9 @@ input, select, textarea {
   font-size: 14px;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
@@ -330,8 +336,12 @@ input:focus, select:focus, textarea:focus {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error-message {
