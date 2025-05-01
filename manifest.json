@@ -13,12 +13,6 @@
     "page": "html/settings.html",
     "open_in_tab": true
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["src/content.js"]
-    }
-  ],
   "web_accessible_resources": [
     {
       "resources": ["icons/*", "html/*", "src/*"],

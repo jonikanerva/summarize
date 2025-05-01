@@ -37,20 +37,23 @@ function extractArticleContent() {
 }
 
 // Add message listener for commands from popup
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "extractContent") {
-    try {
-      const article = extractArticleContent();
-      sendResponse({
-        success: true,
-        title: article.title,
-        content: article.content,
-        byline: article.byline,
-        publishedTime: article.publishedTime,
-      });
-    } catch (e) {
-      sendResponse({ success: false, error: e.message });
+if (!window.__SUMMARIZE_CONTENT_SCRIPT_INJECTED__) {
+  window.__SUMMARIZE_CONTENT_SCRIPT_INJECTED__ = true;
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "extractContent") {
+      try {
+        const article = extractArticleContent();
+        sendResponse({
+          success: true,
+          title: article.title,
+          content: article.content,
+          byline: article.byline,
+          publishedTime: article.publishedTime,
+        });
+      } catch (e) {
+        sendResponse({ success: false, error: e.message });
+      }
+      return true;
     }
-    return true;
-  }
-});
+  });
+}

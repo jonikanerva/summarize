@@ -41,8 +41,11 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// When the extension icon is clicked, automatically summarize the current page
-chrome.action.onClicked.addListener((tab) => {
+/**
+ * When the extension icon is clicked, inject the content script into the active tab,
+ * then open the summary page.
+ */
+chrome.action.onClicked.addListener(async (tab) => {
   // First check if API key is set
   chrome.storage.sync.get(["apiKey"], (result) => {
     if (!result.apiKey) {
@@ -51,9 +54,19 @@ chrome.action.onClicked.addListener((tab) => {
         ? chrome.runtime.openOptionsPage()
         : chrome.tabs.create({ url: "../html/settings.html" });
     } else {
-      chrome.tabs.create({
-        url: chrome.runtime.getURL(`../html/summary.html?tabId=${tab.id}`),
-      });
+      // Inject content script programmatically using scripting API
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tab.id },
+          files: ["src/content.js"],
+        },
+        () => {
+          // After injection, open the summary page as before
+          chrome.tabs.create({
+            url: chrome.runtime.getURL(`../html/summary.html?tabId=${tab.id}`),
+          });
+        }
+      );
     }
   });
 });
