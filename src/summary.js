@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(location.search);
   const tabId = Number(params.get("tabId"));
   if (!tabId) {
-    out.innerHTML = "<p>Ei aktiivista välilehteä.</p>";
+    out.innerHTML = "<p>No active tab detected.</p>";
     return;
   }
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (res.success) {
             out.innerHTML = res.summary;
           } else {
-            out.innerHTML = `<p>Summarointi epäonnistui: ${res.error}</p>`;
+            out.innerHTML = `<p>Summarization failed: ${res.error}</p>`;
           }
         }
       );
