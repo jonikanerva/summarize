@@ -1,3 +1,4 @@
+// Summary page script for displaying article summaries
 document.addEventListener('DOMContentLoaded', () => {
   const out = document.querySelector('.openai-summary-html')
   const settingsBtn = document.getElementById('open-settings')

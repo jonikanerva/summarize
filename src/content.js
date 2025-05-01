@@ -1,6 +1,5 @@
+// Content script for article extraction
 import { Readability } from '@mozilla/readability'
-
-// Content script for article extraction and summary display
 
 // Function to extract article content using Readability or fallback methods
 function extractArticleContent() {
