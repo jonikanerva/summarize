@@ -4,7 +4,7 @@ Summarize is a [Chrome Browser Extension](https://developer.chrome.com/docs/exte
 
 # Install
 
-Clone repository, run `npm install`, and `npm run build`.
+Clone repository, run `yarn install`, and `yarn build`.
 
 Open the [Extensions](chrome://extensions/) page in your browser, enable "Developer mode" from top right, click "Load unpacked" from top left, navigate to this repos `summarize/release` -folder and click "Select".
 

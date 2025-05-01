@@ -5,7 +5,7 @@
     "clean": "rm -rf release",
     "parcel": "parcel build --dist-dir=release manifest.json",
     "zip": "cd release && zip -r summarize.zip . && cd ..",
-    "build": "npm run clean && npm run parcel && npm run zip"
+    "build": "yarn clean && yarn parcel && yarn zip"
   },
   "author": "Joni Kanerva",
   "license": "MIT",
