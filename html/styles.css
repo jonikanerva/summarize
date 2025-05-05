@@ -268,8 +268,8 @@ textarea:focus {
 /* Article Summary Styles */
 .article-summary-extension {
   position: static;
-  margin: 24px;
-  padding: 16px 0;
+  margin: 24px 24px 48px 24px; /* top, right, bottom, left */
+  padding: 16px 0 48px 0;
   background-color: var(--background-color);
   border-radius: 0 0 8px 8px;
   box-shadow: 0 2px 8px var(--shadow-color);
@@ -410,4 +410,10 @@ textarea:focus {
 .openai-summary-html p {
   margin-bottom: 1em;
   font-size: var(--summary-base-font-size);
+}
+
+.openai-summary-html img,
+.openai-summary-html video {
+  max-width: 600px;
+  height: auto;
 }

@@ -118,14 +118,57 @@
           <p>Generating summary...</p>
         </div>
         <div id="openai-summary-html" class="openai-summary-html"></div>
-        <hr />
-        <div class="openai-summary-html">
-          <h3>Original Article</h3>
-          <h1 id="original-article-title"></h1>
-          <div id="original-article" class="openai-summary-html"></div>
-        </div>
       </div>
     </div>
+
+    <div id="article-summary-container" class="article-summary-extension">
+      <div class="summary-header">
+        <div class="summary-title">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="summary-icon"
+          >
+            <path
+              d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+              stroke="#1A73E8"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M7 7H17"
+              stroke="#1A73E8"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M7 12H17"
+              stroke="#1A73E8"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M7 17H13"
+              stroke="#1A73E8"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+          <h2>Full Article (Readability)</h2>
+        </div>
+      </div>
+      <div id="summary-content" class="summary-content">
+        <div id="original-article" class="openai-summary-html"></div>
+      </div>
+    </div>
+
     <script src="../src/summary.js"></script>
   </body>
 </html>

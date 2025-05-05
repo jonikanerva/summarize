@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const loading = document.getElementById('loading-indicator')
   const summary = document.getElementById('openai-summary-html')
   const article = document.getElementById('original-article')
-  const originalTitle = document.getElementById('original-article-title')
   const settingsBtn = document.getElementById('open-settings')
   const reloadBtn = document.getElementById('reload-summary')
 
@@ -37,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (resp.htmlContent) {
-        originalTitle.innerHTML = resp.title
-        article.innerHTML = resp.htmlContent
+        article.innerHTML = `<h1>${resp.title}</h1>${resp.htmlContent}`
       }
 
       chrome.runtime.sendMessage(
