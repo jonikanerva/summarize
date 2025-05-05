@@ -316,6 +316,13 @@ textarea:focus {
   margin-bottom: 8px;
 }
 
+.summary-content hr {
+  border: none;
+  border-top: 2px solid var(--primary-color);
+  margin: 50px auto;
+  width: 90%;
+}
+
 .loading-indicator {
   display: flex;
   flex-direction: column;

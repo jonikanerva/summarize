@@ -1,8 +1,12 @@
 // Summary page script for displaying article summaries
 document.addEventListener('DOMContentLoaded', () => {
-  const out = document.querySelector('.openai-summary-html')
+  const loading = document.getElementById('loading-indicator')
+  const summary = document.getElementById('openai-summary-html')
+  const article = document.getElementById('original-article')
+  const originalTitle = document.getElementById('original-article-title')
   const settingsBtn = document.getElementById('open-settings')
   const reloadBtn = document.getElementById('reload-summary')
+
   reloadBtn.addEventListener('click', generateSummary)
   settingsBtn.addEventListener('click', () => {
     if (chrome.runtime.openOptionsPage) {
@@ -13,21 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   const params = new URLSearchParams(location.search)
   const tabId = Number(params.get('tabId'))
+
   if (!tabId) {
-    out.innerHTML = '<p>No active tab detected.</p>'
+    summary.innerHTML = '<p>No active tab detected.</p>'
+    loading.style.display = 'none'
     return
   }
 
   function generateSummary() {
-    out.innerHTML = `
-      <div class="loading-indicator">
-        <div class="spinner"></div>
-        <p>Generating summary...</p>
-      </div>
-    `
     chrome.tabs.sendMessage(tabId, { action: 'extractContent' }, (resp) => {
       if (!resp || !resp.success) {
-        out.innerHTML = `<p>Error extracting: ${resp?.error}</p>`
+        loading.style.display = 'none'
+        summary.innerHTML = `<p>Error extracting: ${resp?.error}</p>`
         return
       }
 
@@ -35,13 +36,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.title = `Summary: ${resp.title}`
       }
 
+      if (resp.htmlContent) {
+        originalTitle.innerHTML = resp.title
+        article.innerHTML = resp.htmlContent
+      }
+
       chrome.runtime.sendMessage(
         { action: 'summarizeArticle', articleContent: resp },
         (res) => {
+          loading.style.display = 'none'
+
           if (res.success) {
-            out.innerHTML = res.summary
+            summary.innerHTML = res.summary
           } else {
-            out.innerHTML = `<p>Summarization failed: ${res.error}</p>`
+            summary.innerHTML = `<p>Summarization failed: ${res.error}</p>`
           }
         },
       )

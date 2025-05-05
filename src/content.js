@@ -19,6 +19,7 @@ function extractArticleContent() {
       return {
         title: article.title,
         content: article.textContent,
+        htmlContent: article.content,
         byline: article.byline,
         publishedTime: article.publishedTime,
       }
@@ -45,6 +46,7 @@ if (!window.__SUMMARIZE_CONTENT_SCRIPT_INJECTED__) {
           success: true,
           title: article.title,
           content: article.content,
+          htmlContent: article.htmlContent,
           byline: article.byline,
           publishedTime: article.publishedTime,
         })

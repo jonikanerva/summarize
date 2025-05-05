@@ -113,7 +113,17 @@
         </div>
       </div>
       <div id="summary-content" class="summary-content">
-        <div class="openai-summary-html"></div>
+        <div id="loading-indicator" class="loading-indicator">
+          <div class="spinner"></div>
+          <p>Generating summary...</p>
+        </div>
+        <div id="openai-summary-html" class="openai-summary-html"></div>
+        <hr />
+        <div class="openai-summary-html">
+          <h3>Original Article</h3>
+          <h1 id="original-article-title"></h1>
+          <div id="original-article" class="openai-summary-html"></div>
+        </div>
       </div>
     </div>
     <script src="../src/summary.js"></script>
