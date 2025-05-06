@@ -20,8 +20,8 @@ async function summarizeWithOpenAI(apiKey, model, prompt) {
   const response = await openai.chat.completions.create({
     model,
     messages: [{ role: 'user', content: prompt }],
-    temperature: 0.7,
-    max_tokens: 4096,
+    temperature: 0.2,
+    max_completion_tokens: 4096,
   })
 
   return response.choices[0].message.content.trim()
