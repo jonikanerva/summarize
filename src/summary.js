@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateSummary() {
     chrome.tabs.sendMessage(tabId, { action: 'extractContent' }, (resp) => {
+      loading.style.display = ''
+      document.title = 'Summary'
+      summary.innerHTML = ''
+
       if (!resp || !resp.success) {
         loading.style.display = 'none'
         summary.innerHTML = `<p>Error extracting: ${resp?.error}</p>`
