@@ -4,9 +4,7 @@ Summarize is a [Chrome Browser Extension](https://developer.chrome.com/docs/exte
 
 # Install
 
-Clone repository, run `yarn install`, and `yarn build`.
-
-Open the [Extensions](chrome://extensions/) page in your browser, enable "Developer mode" from top right, click "Load unpacked" from top left, navigate to this repos `summarize/release` -folder and click "Select".
+Download and install the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/article-summarizer-with-o/djaflgohpgojbjelpdhpkopnjeimgikk).
 
 # Setup
 
@@ -15,6 +13,12 @@ Launch the extension to open the settings and set your OpenAI API key, select th
 # Using
 
 Launch the extension and it'll send the article to OpenAI to be summarized.
+
+# Install Locally
+
+Clone repository, run `yarn install`, and `yarn build`.
+
+Open the [Extensions](chrome://extensions/) page in your browser, enable "Developer mode" from top right, click "Load unpacked" from top left, navigate to this repos `summarize/release` -folder and click "Select".
 
 # Privacy Statement
 
