@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Article Summarizer with OpenAI",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Instantly summarize and analyze web articles using OpenAI's powerful language models and Mozilla's Readability.",
-  "permissions": ["activeTab", "storage", "scripting", "tabs"],
+  "permissions": ["activeTab", "storage", "scripting"],
   "host_permissions": ["https://api.openai.com/*"],
   "background": {
     "service_worker": "src/background.js",
