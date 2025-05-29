@@ -283,15 +283,16 @@ textarea:focus {
 
 .summary-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 12px;
   padding: 0 16px;
+  gap: 8px;
 }
 
 .summary-title {
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 8px;
 }
 
@@ -303,6 +304,7 @@ textarea:focus {
 
 .summary-actions {
   display: flex;
+  margin-left: auto;
   gap: 8px;
 }
 
