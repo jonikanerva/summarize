@@ -1,6 +1,6 @@
 {
   "name": "summarize",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "lint": "prettier --check .",
     "clean": "rm -rf release",
@@ -13,12 +13,12 @@
   "description": "Summarizes web articles using OpenAI's API and Mozilla's Readability parser",
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
-    "openai": "^4.103.0"
+    "openai": "^5.0.1"
   },
   "devDependencies": {
-    "@parcel/config-webextension": "^2.15.1",
+    "@parcel/config-webextension": "^2.15.2",
     "buffer": "^6.0.3",
-    "parcel": "^2.15.1",
+    "parcel": "^2.15.2",
     "prettier": "^3.5.3",
     "process": "^0.11.10",
     "svgo": "^3.3.2"
