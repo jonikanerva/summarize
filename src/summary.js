@@ -1,4 +1,6 @@
 // Summary page script for displaying article summaries
+import DOMPurify from 'dompurify'
+
 document.addEventListener('DOMContentLoaded', () => {
   const loading = document.getElementById('loading-indicator')
   const summary = document.getElementById('openai-summary-html')
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (resp.htmlContent) {
-        article.innerHTML = `<h1>${resp.title}</h1>${resp.htmlContent}`
+        article.innerHTML = `<h1>${resp.title}</h1>${DOMPurify.sanitize(resp.htmlContent)}`
       }
 
       chrome.runtime.sendMessage(
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
           loading.style.display = 'none'
 
           if (res.success) {
-            summary.innerHTML = res.summary
+            summary.innerHTML = DOMPurify.sanitize(res.summary)
           } else {
             summary.innerHTML = `<p>Summarization failed: ${res.error}</p>`
           }
