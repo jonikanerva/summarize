@@ -1,14 +1,6 @@
 // Background script for managing extension state and API communication
 import OpenAI from 'openai'
-
-// Default settings
-// TODO: duplication from settings.js
-const DEFAULT_SETTINGS = {
-  apiKey: '',
-  model: 'gpt-4.1',
-  promptTemplate:
-    'Summarize the provided content comprehensively and accurately, ensuring no key details are omitted.\n\nStart by generating a good title for the article stating what the text is about objectively, followed by the byline who is the author(s) of the article and date written.\n\nThen create a bulleted list of the objective facts and key points, followed by a bulleted list of the author’s opinions.\n\nThen write an assessment of whether the article provides sources for its facts, comment on the reliability of those sources, and/or the reputation of the author.\n\nConclude with a one-paragraph summary of the whole article.\n\nStructure your response using proper HTML formatting, using only element <H1>, <H2>, <UL>, <LI>, and <P>.\n\n{{ARTICLE_TEXT}}',
-}
+import { DEFAULT_SETTINGS } from './config.js' // Import default settings
 
 async function summarizeWithOpenAI(apiKey, model, prompt) {
   if (!apiKey) {
