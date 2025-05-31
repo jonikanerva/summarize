@@ -129,13 +129,6 @@ async function summarizeArticle(articleData) {
     // Create prompt from template
     const prompt = settings.promptTemplate.replace('{{ARTICLE_TEXT}}', article)
 
-    // Use the util function (assume it's loaded in the background context)
-    if (typeof summarizeWithOpenAI !== 'function') {
-      throw new Error(
-        'summarizeWithOpenAI is not available in background script. Please ensure utils/openai.js is loaded.',
-      )
-    }
-
     return await summarizeWithOpenAI(settings.apiKey, settings.model, prompt)
   } catch (error) {
     console.error('Error in summarizeArticle:', error)
