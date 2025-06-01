@@ -15,8 +15,20 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icons/*", "html/*", "src/*"],
+      "resources": ["src/content.js"],
       "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "icons/icon16.png",
+        "icons/icon48.png",
+        "icons/icon128.png",
+        "icons/store-icon.png",
+        "html/settings.html",
+        "html/summary.html",
+        "html/styles.css"
+      ],
+      "matches": ["chrome-extension://*/*"]
     }
   ],
   "action": {
