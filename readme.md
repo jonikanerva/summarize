@@ -12,7 +12,7 @@ Launch the extension to open the settings, set your OpenAI API key, choose the d
 
 ## Usage
 
-Launch the extension to summarize the current article using OpenAI. For convenience, set a [keyboard shortcut](chrome://extensions/shortcuts) (e.g., `^S`) to quickly launch the extension.
+Launch the extension to summarize the current article using OpenAI. For convenience, set a keyboard shortcut (`chrome://extensions/shortcuts`), e.g., `^S`, to quickly launch the extension.
 
 ## Local Installation
 
@@ -23,7 +23,7 @@ yarn install
 yarn build
 ```
 
-Open the [Extensions](chrome://extensions/) page in your browser, enable **Developer mode** (top-right corner), click **Load unpacked** (top-left corner), navigate to the `summarize/release` folder in this repository, and select it.
+Open the Extensions (`chrome://extensions/`) page in your browser, enable **Developer mode** (top-right corner), click **Load unpacked** (top-left corner), navigate to the `summarize/release` folder in this repository, and select it.
 
 ## Privacy Statement
 
