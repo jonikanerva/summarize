@@ -201,17 +201,6 @@ textarea:focus {
   border-bottom: 1px solid var(--medium-grey);
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo h1 {
-  font-size: 16px;
-  font-weight: 500;
-}
-
 .popup-content {
   padding: 16px;
   flex-grow: 1;
@@ -250,12 +239,18 @@ textarea:focus {
 }
 
 .settings-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 24px;
+  padding: 0 16px;
+  gap: 8px;
 }
 
 .settings-header h1 {
   font-size: 20px;
   font-weight: 500;
+  color: var(--primary-color);
 }
 
 .settings-content {
