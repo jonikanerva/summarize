@@ -1,25 +1,30 @@
 # Summarize
 
-Summarize is a [Chrome Browser Extension](https://developer.chrome.com/docs/extensions/) that summarizes web articles using [OpenAI's API](https://www.npmjs.com/package/openai) and [Mozilla's Readability parser](https://www.npmjs.com/package/@mozilla/readability). It requires you use your own [OpenAI API key](https://platform.openai.com/settings/organization/api-keys).
+**Summarize** is a [Chrome browser extension](https://developer.chrome.com/docs/extensions/) that summarizes web articles using [OpenAI's API](https://www.npmjs.com/package/openai) and [Mozilla's Readability parser](https://www.npmjs.com/package/@mozilla/readability). It requires you **to provide your own** [OpenAI API key](https://platform.openai.com/settings/organization/api-keys).
 
-# Install
+## Installation
 
 Download and install the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/article-summarizer-with-o/djaflgohpgojbjelpdhpkopnjeimgikk).
 
-# Setup
+## Setup
 
-Launch the extension to open the settings and set your OpenAI API key, select the model, and edit the prompt if needed.
+Launch the extension to open the settings, set your OpenAI API key, choose the desired model, and optionally edit the prompt.
 
-# Using
+## Usage
 
-Launch the extension and it'll send the article to OpenAI to be summarized.
+Launch the extension to summarize the current article using OpenAI. For convenience, set a [keyboard shortcut](chrome://extensions/shortcuts) (e.g., `^S`) to quickly launch the extension.
 
-# Install Locally
+## Local Installation
 
-Clone repository, run `yarn install`, and `yarn build`.
+Clone the repository and run:
 
-Open the [Extensions](chrome://extensions/) page in your browser, enable "Developer mode" from top right, click "Load unpacked" from top left, navigate to this repos `summarize/release` -folder and click "Select".
+```shell
+yarn install
+yarn build
+```
 
-# Privacy Statement
+Open the [Extensions](chrome://extensions/) page in your browser, enable **Developer mode** (top-right corner), click **Load unpacked** (top-left corner), navigate to the `summarize/release` folder in this repository, and select it.
 
-Summarize extension collects zero data from its users.
+## Privacy Statement
+
+**Summarize** collects **no user data**.
