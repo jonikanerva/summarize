@@ -26,7 +26,9 @@
         "icons/store-icon.png",
         "html/settings.html",
         "html/summary.html",
-        "html/styles.css"
+        "html/common.css",
+        "html/settings.css",
+        "html/summary.css"
       ],
       "matches": ["chrome-extension://*/*"]
     }

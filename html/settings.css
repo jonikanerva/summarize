@@ -1,0 +1,145 @@
+/* Styles specific to settings.html */
+.primary-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.primary-button:hover {
+  background-color: #0d62d9;
+}
+
+.primary-button:active {
+  background-color: #0a57c5;
+}
+
+.primary-button:disabled {
+  background-color: var(--medium-grey);
+  cursor: not-allowed;
+  color: var(--dark-grey);
+}
+
+.secondary-button {
+  background-color: var(--light-grey);
+  color: var(--text-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.secondary-button:hover {
+  background-color: var(--medium-grey);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--medium-grey);
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.input-help {
+  font-size: 12px;
+  color: var(--dark-grey);
+  margin-top: 4px;
+}
+
+.input-with-info {
+  position: relative;
+}
+
+.toggle-visibility {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--dark-grey);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.status-message {
+  margin-top: 16px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.status-success {
+  background-color: rgba(52, 168, 83, 0.1);
+  color: var(--secondary-color);
+}
+
+.status-error {
+  background-color: rgba(234, 67, 53, 0.1);
+  color: var(--accent-color);
+}
+
+.status-info {
+  background-color: rgba(26, 115, 232, 0.1);
+  color: var(--primary-color);
+}
+
+.settings-body {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.settings-header h1 {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.settings-content {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
