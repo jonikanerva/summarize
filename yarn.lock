@@ -173,7 +173,7 @@
     "@parcel/transformer-raw" "2.15.2"
     "@parcel/transformer-webextension" "2.15.2"
 
-"@parcel/core@2.15.2":
+"@parcel/core@2.15.2", "@parcel/core@^2.15.2":
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/@parcel/core/-/core-2.15.2.tgz#b84362d0948ff2c8cebea4d3c3d6b7c6f6c1c5fc"
   integrity sha512-yIFtxeLPLbTkpNuXGmnBX1U51unxv+gRoH/I5IcyD/vRL2Kp/cQU6YJWTSGK5sWG1Fgo+1Z2DeYp914Yd4a1WQ==
