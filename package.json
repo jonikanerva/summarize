@@ -29,8 +29,5 @@
     "semi": false,
     "singleQuote": true
   },
-  "engines": {
-    "node": ">=22"
-  },
   "packageManager": "yarn@1.22.22"
 }
