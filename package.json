@@ -29,5 +29,5 @@
     "semi": false,
     "singleQuote": true
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@4.9.1"
 }

@@ -1,7 +1,8 @@
 .aider*
-.replit
 .config
-.vscode
-node_modules
 .parcel-cache
+.replit
+.vscode
+.yarn/*
+node_modules
 release
