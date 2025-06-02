@@ -8,9 +8,16 @@ This repository contains a Chrome extension that summarizes web articles using O
   - `background.js` handles events and API requests
   - `content.js` extracts article text in the browser
   - `settings.js` manages the options page
-  - `summary.js` displays the generated summary
-  - `config.js` defines `DEFAULT_SETTINGS`
-- `html/` – HTML/CSS for the settings and summary pages
+  - `summary.js` manages the generated summary
+  - `config.js` for defining shared extension configurations
+- `html/` – HTML for the settings and summary pages
+  - `summary.html` displays the generated summary
+  - `settings.html` displays the options page
+- `css/` – CSS for the settings and summary pages
+  - `common.css` - common CSS shared between pages
+  - `settings.css` - CSS for the settings page
+  - `summary.css` - CSS for the summary page
+- `icons/*` – PNG files used as extension icons
 - `manifest.json` – Chrome extension manifest
 
 ## Setup and build
