@@ -10,6 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const restoreDefaultsBtn = document.getElementById('restore-defaults')
   const statusMessage = document.getElementById('status-message')
 
+  // OpenAI API key validation function
+  async function validateOpenAIApiKey(apiKey) {
+    try {
+      const response = await fetch('https://api.openai.com/v1/models', {
+        headers: { Authorization: `Bearer ${apiKey}` },
+      })
+      if (response.status === 401) {
+        throw new Error('Invalid API key.')
+      }
+      if (!response.ok) {
+        throw new Error(
+          'OpenAI API validation failed (' + response.status + ').',
+        )
+      }
+      return true
+    } catch (err) {
+      return err.message
+    }
+  }
+
   // Load settings
   function loadSettings() {
     chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
@@ -20,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Save settings
-  function saveSettings(e) {
+  async function saveSettings(e) {
     e.preventDefault()
 
     const settings = {
@@ -40,6 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'Prompt template must include {{ARTICLE_TEXT}} placeholder.',
         'error',
       )
+      return
+    }
+
+    // Validate API key with OpenAI
+    showStatus('Validating API key, please wait...', 'info')
+    const validation = await validateOpenAIApiKey(settings.apiKey)
+    if (validation !== true) {
+      showStatus('API key validation failed: ' + validation, 'error')
       return
     }
 
