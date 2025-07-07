@@ -4,6 +4,27 @@ set -e
 
 echo "🚀 Starting release process..."
 
+# Check if git status is clean
+echo "🔍 Checking git status..."
+if [ -n "$(git status --porcelain)" ]; then
+    echo "❌ Git repository has unstaged or uncommitted changes:"
+    git status --short
+    echo "Please commit or stash your changes before releasing."
+    exit 1
+fi
+
+# Check if there are unpushed commits
+echo "🔍 Checking for unpushed commits..."
+UNPUSHED=$(git log --oneline origin/main..HEAD 2>/dev/null | wc -l)
+if [ $UNPUSHED -gt 0 ]; then
+    echo "❌ There are $UNPUSHED unpushed commits:"
+    git log --oneline origin/main..HEAD
+    echo "Please push your commits before releasing."
+    exit 1
+fi
+
+echo "✅ Repository is clean and up to date."
+
 # Get current version from package.json
 CURRENT_VERSION=$(node -p "require('./package.json').version")
 echo "Current version: $CURRENT_VERSION"
