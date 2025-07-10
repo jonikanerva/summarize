@@ -119,13 +119,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         },
       ]
 
-      const enableWenbSearch =
+      const enableWebSearch =
         result.allowWebSearch === undefined
           ? DEFAULT_SETTINGS.allowWebSearchCheckbox
           : result.allowWebSearch
       const options = {
         previous_response_id: request.previousResponseId,
-        tools: enableWenbSearch ? [{ type: 'web_search_preview' }] : [],
+        tools: enableWebSearch ? [{ type: 'web_search_preview' }] : [],
       }
 
       summarizeWithOpenAI(messages, options)
