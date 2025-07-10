@@ -1,4 +1,26 @@
 /* Styles specific to summary.html */
+.settings-button {
+  position: absolute;
+  top: 34px;
+  right: 34px;
+  background: var(--background-color);
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.settings-button:hover {
+  background-color: var(--light-grey);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
 .action-button {
   background: none;
   padding: 4px;
@@ -35,12 +57,6 @@
   font-size: 16px;
   font-weight: 500;
   color: var(--primary-color);
-}
-
-.summary-actions {
-  display: flex;
-  margin-left: auto;
-  gap: 8px;
 }
 
 .summary-content {
