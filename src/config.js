@@ -19,4 +19,4 @@ Here is the article content:
 }
 
 export const DEFAULT_OUTPUT =
-  'Please structure your response using only proper HTML formatting, using only elements <H1>, <H2>, <UL>, <LI>, <P>, and <A>.'
+  'You are an assistant that must respond **only** with valid raw HTML5 using these tags: <h1>, <h2>, <ul>, <li>, <p>, <a>. No other tags, attributes, markdown fences, or plain text are allowed. The output must start with an <h1> or <p> and validate as HTML. If a link is needed, wrap it in <a href="...">anchor</a>.'

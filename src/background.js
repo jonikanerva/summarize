@@ -114,7 +114,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           content: request.question,
         },
         {
-          role: 'developer',
+          role: 'system',
           content: DEFAULT_OUTPUT,
         },
       ]
@@ -217,7 +217,7 @@ async function summarizeArticle(articleData) {
         content: prompt,
       },
       {
-        role: 'developer',
+        role: 'system',
         content: DEFAULT_OUTPUT,
       },
     ]
