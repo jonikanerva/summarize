@@ -143,3 +143,123 @@
   max-width: 600px;
   height: auto;
 }
+
+/* Floating input field styles */
+.floating-input-container {
+  position: fixed;
+  bottom: 0.8em;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 900px;
+  width: calc(100vw - 96px);
+  z-index: 2147483648;
+  background: var(--background-color);
+  opacity: 0.95;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px var(--shadow-color);
+  border: 1px solid var(--light-grey);
+}
+
+.follow-up-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 12px;
+}
+
+.follow-up-input {
+  flex: 1;
+  border: 1px solid var(--light-grey);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--font-family);
+  font-size: var(--summary-base-font-size);
+  line-height: 1.4;
+  color: var(--text-color);
+  background: var(--background-color);
+  resize: none;
+  min-height: 20px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.follow-up-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.follow-up-input::placeholder {
+  color: var(--dark-grey);
+}
+
+.follow-up-submit {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 32px;
+  height: 32px;
+}
+
+.follow-up-submit:hover {
+  background: #1557b8;
+}
+
+.follow-up-submit:disabled {
+  background: var(--light-grey);
+  cursor: not-allowed;
+}
+
+/* Follow-up responses container */
+#follow-up-responses-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.follow-up-response {
+  margin: 24px 24px 0;
+  padding: 16px 0 24px;
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  max-width: calc(100vw - 48px);
+}
+
+.follow-up-response .summary-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.follow-up-response .summary-title h2 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.follow-up-response .summary-content {
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 0 16px;
+}
+
+.follow-up-question {
+  background: #f8f9fa;
+  border-left: 4px solid var(--primary-color);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-color);
+}

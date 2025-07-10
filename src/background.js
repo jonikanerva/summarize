@@ -2,16 +2,39 @@
 import OpenAI from 'openai'
 import { DEFAULT_SETTINGS } from './config.js' // Import default settings
 
-async function summarizeWithOpenAI(apiKey, model, prompt) {
-  if (!apiKey) {
-    throw new Error('API key is required')
+async function summarizeWithOpenAI(messagesInput) {
+  // Get settings from storage
+  const settings = await new Promise((resolve) => {
+    chrome.storage.sync.get(['apiKey', 'model'], resolve)
+  })
+
+  if (!settings.apiKey) {
+    throw new Error(
+      '"API key" not configured. Please add your OpenAI API key in the extension settings.',
+    )
   }
 
-  const openai = new OpenAI({ apiKey })
+  if (!settings.model) {
+    throw new Error(
+      '"model" not configured. Please add the model name in the extension settings.',
+    )
+  }
+
+  const openai = new OpenAI({ apiKey: settings.apiKey })
+
+  // Add system message for HTML formatting to existing messages
+  const messages = [
+    ...messagesInput,
+    {
+      role: 'system',
+      content:
+        'Structure your response using proper HTML formatting, using only element <H1>, <H2>, <UL>, <LI>, and <P>',
+    },
+  ]
 
   const response = await openai.chat.completions.create({
-    model,
-    messages: [{ role: 'user', content: prompt }],
+    model: settings.model,
+    messages,
     temperature: 0.2,
     max_completion_tokens: 4096,
   })
@@ -65,7 +88,20 @@ chrome.action.onClicked.addListener(async (tab) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'summarizeArticle') {
     summarizeArticle(request.articleContent)
-      .then((summary) => sendResponse({ success: true, summary }))
+      .then((result) =>
+        sendResponse({
+          success: true,
+          summary: result.summary,
+          initialMessages: result.initialMessages,
+        }),
+      )
+      .catch((error) => sendResponse({ success: false, error: error.message }))
+    return true // Required for async sendResponse
+  }
+
+  if (request.action === 'askFollowUpQuestion') {
+    summarizeWithOpenAI(request.conversationHistory)
+      .then((answer) => sendResponse({ success: true, answer }))
       .catch((error) => sendResponse({ success: false, error: error.message }))
     return true // Required for async sendResponse
   }
@@ -106,17 +142,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 })
 
-// Function to summarize article using OpenAI API (delegates to utils/openai.js)
+// Function to summarize article using OpenAI API
 async function summarizeArticle(articleData) {
   try {
-    // Get settings from storage
+    // Get settings from storage for promptTemplate
     const settings = await new Promise((resolve) => {
-      chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], resolve)
+      chrome.storage.sync.get(['promptTemplate'], resolve)
     })
 
-    if (!settings.apiKey) {
+    if (!settings.promptTemplate) {
       throw new Error(
-        'API key not configured. Please add your OpenAI API key in the extension settings.',
+        '"Prompt template" not configured. Please add the template in the extension settings.',
       )
     }
 
@@ -129,7 +165,13 @@ async function summarizeArticle(articleData) {
     // Create prompt from template
     const prompt = settings.promptTemplate.replace('{{ARTICLE_TEXT}}', article)
 
-    return await summarizeWithOpenAI(settings.apiKey, settings.model, prompt)
+    // Create messages array for OpenAI API - this will be the initial conversation
+    const messages = [{ role: 'system', content: prompt }]
+
+    const summary = await summarizeWithOpenAI(messages)
+
+    // Return both summary and the initial messages for conversation history
+    return { summary, initialMessages: messages }
   } catch (error) {
     console.error('Error in summarizeArticle:', error)
     throw error

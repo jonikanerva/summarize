@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" href="../icons/icon128.png" />
   </head>
   <body>
+    <div id="follow-up-responses-container"></div>
+
     <div id="article-summary-container" class="article-summary-extension">
       <div class="summary-header">
         <div class="summary-icon">
@@ -172,6 +174,41 @@
       <div id="article-content" class="summary-content">
         <div id="original-article" class="openai-summary-html"></div>
       </div>
+    </div>
+
+    <div id="floating-input-container" class="floating-input-container">
+      <form id="follow-up-form" class="follow-up-form">
+        <textarea
+          id="follow-up-input"
+          class="follow-up-input"
+          placeholder="Ask a follow-up question..."
+          rows="1"
+        ></textarea>
+        <button type="submit" id="follow-up-submit" class="follow-up-submit">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M22 2L11 13"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M22 2L15 22L11 13L2 9L22 2Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </form>
     </div>
 
     <script type="module" src="../src/summary.js"></script>

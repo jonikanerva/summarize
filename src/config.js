@@ -12,8 +12,6 @@ Then write an assessment of whether the article provides sources for its facts, 
 
 Conclude with a one-paragraph summary of the whole article.
 
-Structure your response using proper HTML formatting, using only element <H1>, <H2>, <UL>, <LI>, and <P>.
-
 Here is the article content:
 
 {{ARTICLE_TEXT}}`,
