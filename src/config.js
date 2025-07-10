@@ -15,4 +15,8 @@ Conclude with a one-paragraph summary of the whole article.
 Here is the article content:
 
 {{ARTICLE_TEXT}}`,
+  allowWebSearchCheckbox: true,
 }
+
+export const DEFAULT_OUTPUT =
+  'Please structure your response using only proper HTML formatting, using only elements <H1>, <H2>, <UL>, <LI>, <P>, and <A>.'

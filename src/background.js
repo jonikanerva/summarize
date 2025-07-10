@@ -1,8 +1,8 @@
 // Background script for managing extension state and API communication
 import OpenAI from 'openai'
-import { DEFAULT_SETTINGS } from './config.js' // Import default settings
+import { DEFAULT_OUTPUT, DEFAULT_SETTINGS } from './config.js' // Import default settings
 
-async function summarizeWithOpenAI(messagesInput) {
+async function summarizeWithOpenAI(messages, options) {
   // Get settings from storage
   const settings = await new Promise((resolve) => {
     chrome.storage.sync.get(['apiKey', 'model'], resolve)
@@ -22,36 +22,41 @@ async function summarizeWithOpenAI(messagesInput) {
 
   const openai = new OpenAI({ apiKey: settings.apiKey })
 
-  // Add system message for HTML formatting to existing messages
-  const messages = [
-    ...messagesInput,
-    {
-      role: 'system',
-      content:
-        'Structure your response using proper HTML formatting, using only element <H1>, <H2>, <UL>, <LI>, and <P>',
-    },
-  ]
-
-  const response = await openai.chat.completions.create({
+  // Prepare request parameters
+  const requestParams = {
     model: settings.model,
-    messages,
+    input: messages,
+    store: true,
     temperature: 0.2,
-    max_completion_tokens: 4096,
-  })
+    ...options,
+  }
 
-  return response.choices[0].message.content.trim()
+  const response = await openai.responses.create(requestParams)
+
+  return {
+    content: response.output_text?.trim() || response.output?.trim(),
+    responseId: response.id,
+  }
 }
 
 // Initialize extension settings
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
-    const settings = {
-      apiKey: result.apiKey || DEFAULT_SETTINGS.apiKey,
-      model: result.model || DEFAULT_SETTINGS.model,
-      promptTemplate: result.promptTemplate || DEFAULT_SETTINGS.promptTemplate,
-    }
-    chrome.storage.sync.set(settings)
-  })
+  chrome.storage.sync.get(
+    ['apiKey', 'model', 'promptTemplate', 'allowWebSearch'],
+    (result) => {
+      const settings = {
+        apiKey: result.apiKey || DEFAULT_SETTINGS.apiKey,
+        model: result.model || DEFAULT_SETTINGS.model,
+        promptTemplate:
+          result.promptTemplate || DEFAULT_SETTINGS.promptTemplate,
+        allowWebSearch:
+          result.allowWebSearch === undefined
+            ? DEFAULT_SETTINGS.allowWebSearchCheckbox
+            : result.allowWebSearch,
+      }
+      chrome.storage.sync.set(settings)
+    },
+  )
 })
 
 /**
@@ -92,7 +97,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({
           success: true,
           summary: result.summary,
-          initialMessages: result.initialMessages,
+          responseId: result.responseId,
         }),
       )
       .catch((error) => sendResponse({ success: false, error: error.message }))
@@ -100,21 +105,60 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === 'askFollowUpQuestion') {
-    summarizeWithOpenAI(request.conversationHistory)
-      .then((answer) => sendResponse({ success: true, answer }))
-      .catch((error) => sendResponse({ success: false, error: error.message }))
+    // Get web search setting from storage
+    chrome.storage.sync.get(['allowWebSearch'], (result) => {
+      // Create messages array for follow-up question
+      const messages = [
+        {
+          role: 'user',
+          content: request.question,
+        },
+        {
+          role: 'developer',
+          content: DEFAULT_OUTPUT,
+        },
+      ]
+
+      const enableWenbSearch =
+        result.allowWebSearch === undefined
+          ? DEFAULT_SETTINGS.allowWebSearchCheckbox
+          : result.allowWebSearch
+      const options = {
+        previous_response_id: request.previousResponseId,
+        tools: enableWenbSearch ? [{ type: 'web_search_preview' }] : [],
+      }
+
+      summarizeWithOpenAI(messages, options)
+        .then((result) =>
+          sendResponse({
+            success: true,
+            answer: result.content,
+            responseId: result.responseId,
+          }),
+        )
+        .catch((error) =>
+          sendResponse({ success: false, error: error.message }),
+        )
+    })
     return true // Required for async sendResponse
   }
 
   if (request.action === 'getSettings') {
-    chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
-      sendResponse({
-        apiKey: result.apiKey || DEFAULT_SETTINGS.apiKey,
-        model: result.model || DEFAULT_SETTINGS.model,
-        promptTemplate:
-          result.promptTemplate || DEFAULT_SETTINGS.promptTemplate,
-      })
-    })
+    chrome.storage.sync.get(
+      ['apiKey', 'model', 'promptTemplate', 'allowWebSearch'],
+      (result) => {
+        sendResponse({
+          apiKey: result.apiKey || DEFAULT_SETTINGS.apiKey,
+          model: result.model || DEFAULT_SETTINGS.model,
+          promptTemplate:
+            result.promptTemplate || DEFAULT_SETTINGS.promptTemplate,
+          allowWebSearch:
+            result.allowWebSearch === undefined
+              ? DEFAULT_SETTINGS.allowWebSearchCheckbox
+              : result.allowWebSearch,
+        })
+      },
+    )
     return true // Required for async sendResponse
   }
 
@@ -124,6 +168,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         apiKey: request.settings.apiKey,
         model: request.settings.model,
         promptTemplate: request.settings.promptTemplate,
+        allowWebSearch: request.settings.allowWebSearch,
       },
       () => {
         sendResponse({ success: true })
@@ -165,13 +210,29 @@ async function summarizeArticle(articleData) {
     // Create prompt from template
     const prompt = settings.promptTemplate.replace('{{ARTICLE_TEXT}}', article)
 
-    // Create messages array for OpenAI API - this will be the initial conversation
-    const messages = [{ role: 'system', content: prompt }]
+    // Create messages array with system role for HTML formatting and user role for content
+    const messages = [
+      {
+        role: 'user',
+        content: prompt,
+      },
+      {
+        role: 'developer',
+        content: DEFAULT_OUTPUT,
+      },
+    ]
 
-    const summary = await summarizeWithOpenAI(messages)
+    const options = {
+      tools: [],
+    }
 
-    // Return both summary and the initial messages for conversation history
-    return { summary, initialMessages: messages }
+    // Use Responses API with store:true for initial summary
+    const result = await summarizeWithOpenAI(messages, options)
+
+    return {
+      summary: result.content,
+      responseId: result.responseId,
+    }
   } catch (error) {
     console.error('Error in summarizeArticle:', error)
     throw error

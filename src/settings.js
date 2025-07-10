@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const apiKeyInput = document.getElementById('api-key')
   const modelInput = document.getElementById('model')
   const promptTemplateTextarea = document.getElementById('prompt-template')
+  const allowWebSearchCheckbox = document.getElementById('allow-web-search')
   const toggleApiKeyBtn = document.getElementById('toggle-api-key')
   const restoreDefaultsBtn = document.getElementById('restore-defaults')
   const statusMessage = document.getElementById('status-message')
@@ -32,11 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load settings
   function loadSettings() {
-    chrome.storage.sync.get(['apiKey', 'model', 'promptTemplate'], (result) => {
-      apiKeyInput.value = result.apiKey
-      modelInput.value = result.model
-      promptTemplateTextarea.value = result.promptTemplate
-    })
+    chrome.storage.sync.get(
+      ['apiKey', 'model', 'promptTemplate', 'allowWebSearch'],
+      (result) => {
+        apiKeyInput.value = result.apiKey || ''
+        modelInput.value = result.model || ''
+        promptTemplateTextarea.value = result.promptTemplate || ''
+        allowWebSearchCheckbox.checked =
+          result.allowWebSearch === undefined ? true : result.allowWebSearch
+      },
+    )
   }
 
   // Save settings
@@ -47,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       apiKey: apiKeyInput.value.trim(),
       model: modelInput.value.trim(),
       promptTemplate: promptTemplateTextarea.value,
+      allowWebSearch: allowWebSearchCheckbox.checked,
     }
 
     // Validate settings
@@ -87,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     apiKeyInput.value = DEFAULT_SETTINGS.apiKey
     modelInput.value = DEFAULT_SETTINGS.model
     promptTemplateTextarea.value = DEFAULT_SETTINGS.promptTemplate
+    allowWebSearchCheckbox.checked = DEFAULT_SETTINGS.allowWebSearchCheckbox
     showStatus('Default settings restored. Click Save to apply.', 'info')
   }
 

@@ -13,9 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'follow-up-responses-container',
   )
 
-  let currentArticleContent = null
-  let currentSummary = null
-  let conversationHistory = []
+  let currentResponseId = null
 
   settingsBtn.addEventListener('click', () => {
     if (chrome.runtime.openOptionsPage) {
@@ -72,9 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         article.innerHTML = `<h1>${resp.title}</h1>${DOMPurify.sanitize(resp.htmlContent)}`
       }
 
-      // Store article content for follow-up questions
-      currentArticleContent = resp
-
       chrome.runtime.sendMessage(
         { action: 'summarizeArticle', articleContent: resp },
         (res) => {
@@ -82,13 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (res.success) {
             summary.innerHTML = DOMPurify.sanitize(res.summary)
-            currentSummary = res.summary
-
-            // Initialize conversation history with the messages from summarizeArticle
-            conversationHistory = [
-              ...res.initialMessages,
-              { role: 'assistant', content: res.summary },
-            ]
+            currentResponseId = res.responseId
           } else {
             summary.innerHTML = `<p>Summarization failed: ${res.error}</p>`
           }
@@ -102,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault()
 
     const question = followUpInput.value.trim()
-    if (!question || !currentArticleContent || !currentSummary) return
+    if (!question || !currentResponseId) return
 
     // Disable form while processing
     followUpSubmit.disabled = true
@@ -148,17 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
     followUpInput.value = ''
     followUpInput.style.height = 'auto'
 
-    // Add user question to conversation history
-    conversationHistory.push({
-      role: 'user',
-      content: question,
-    })
-
     // Send request to background script
     chrome.runtime.sendMessage(
       {
         action: 'askFollowUpQuestion',
-        conversationHistory: conversationHistory,
+        question: question,
+        previousResponseId: currentResponseId,
       },
       (response) => {
         // Re-enable form
@@ -169,15 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadingDiv = responseDiv.querySelector('.loading-indicator')
 
         if (response && response.success) {
-          // Add assistant response to conversation history
-          conversationHistory.push({
-            role: 'assistant',
-            content: response.answer,
-          })
+          // Update current response ID for next follow-up
+          currentResponseId = response.responseId
           loadingDiv.outerHTML = `<div class="openai-summary-html">${DOMPurify.sanitize(response.answer)}</div>`
         } else {
-          // Remove the question from history if the request failed
-          conversationHistory.pop()
           loadingDiv.outerHTML = `<p>Error: ${response?.error || 'Failed to get response'}</p>`
         }
       },
