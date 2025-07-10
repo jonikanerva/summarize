@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const summary = document.getElementById('openai-summary-html')
   const article = document.getElementById('original-article')
   const settingsBtn = document.getElementById('open-settings')
-  const reloadBtn = document.getElementById('reload-summary')
   const followUpForm = document.getElementById('follow-up-form')
   const followUpInput = document.getElementById('follow-up-input')
   const followUpSubmit = document.getElementById('follow-up-submit')
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentSummary = null
   let conversationHistory = []
 
-  reloadBtn.addEventListener('click', generateSummary)
   settingsBtn.addEventListener('click', () => {
     if (chrome.runtime.openOptionsPage) {
       chrome.runtime.openOptionsPage()
