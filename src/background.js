@@ -110,12 +110,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       // Create messages array for follow-up question
       const messages = [
         {
-          role: 'user',
-          content: request.question,
-        },
-        {
           role: 'system',
           content: DEFAULT_OUTPUT,
+        },
+        {
+          role: 'user',
+          content: request.question,
         },
       ]
 
@@ -213,12 +213,12 @@ async function summarizeArticle(articleData) {
     // Create messages array with system role for HTML formatting and user role for content
     const messages = [
       {
-        role: 'user',
-        content: prompt,
-      },
-      {
         role: 'system',
         content: DEFAULT_OUTPUT,
+      },
+      {
+        role: 'user',
+        content: prompt,
       },
     ]
 
