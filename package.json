@@ -1,6 +1,6 @@
 {
   "name": "summarize",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "scripts": {
     "lint": "prettier --check .",
     "clean": "rm -rf release",
