@@ -27,7 +27,6 @@ async function summarizeWithOpenAI(messages, options) {
     model: settings.model,
     input: messages,
     store: true,
-    temperature: 0.2,
     ...options,
   }
 
