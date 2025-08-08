@@ -1,7 +1,7 @@
 // Default settings
 export const DEFAULT_SETTINGS = {
   apiKey: '',
-  model: 'gpt-4.1',
+  model: 'gpt-5',
   promptTemplate: `Summarize the provided content comprehensively and accurately, ensuring no key details are omitted.
 
 Start by generating a good title for the article stating what the text is about objectively, followed by the byline who is the author(s) of the article and date written (Author: X, Date: Y)
