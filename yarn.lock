@@ -2421,9 +2421,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:^5.9.0":
-  version: 5.9.0
-  resolution: "openai@npm:5.9.0"
+"openai@npm:^5.12.1":
+  version: 5.12.1
+  resolution: "openai@npm:5.12.1"
   peerDependencies:
     ws: ^8.18.0
     zod: ^3.23.8
@@ -2434,7 +2434,7 @@ __metadata:
       optional: true
   bin:
     openai: bin/cli
-  checksum: 10c0/368a44471eea19b2ce1807b19cb9683ab0656af817e4e2d725a1d0e5efa9fde52d818215427692c6aee24dccf264155685071aa79abe8ddcc3c7b8ca695c610c
+  checksum: 10c0/d6b786493b4e61f50d4ef458aa2d895db0c85b5bccd31253d51c8a2ecdab0ce7ecda20327ddc523cfb81a79672f26469be6a19f8a6c9a35fdc1bb56543ef531d
   languageName: node
   linkType: hard
 
@@ -2736,7 +2736,7 @@ __metadata:
     "@parcel/core": "npm:^2.15.4"
     buffer: "npm:^6.0.3"
     dompurify: "npm:^3.2.6"
-    openai: "npm:^5.9.0"
+    openai: "npm:^5.12.1"
     parcel: "npm:^2.15.4"
     prettier: "npm:^3.6.2"
     process: "npm:^0.11.10"
