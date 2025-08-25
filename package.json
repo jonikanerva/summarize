@@ -15,7 +15,7 @@
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
     "dompurify": "^3.2.6",
-    "openai": "^5.12.1"
+    "openai": "^5.15.0"
   },
   "devDependencies": {
     "@parcel/config-webextension": "^2.15.4",
